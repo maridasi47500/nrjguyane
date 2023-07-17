@@ -1,0 +1,32 @@
+<%= form_with(model: animateur) do |form| %>
+  <% if animateur.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(animateur.errors.count, "error") %> prohibited this animateur from being saved:</h2>
+
+      <ul>
+        <% animateur.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

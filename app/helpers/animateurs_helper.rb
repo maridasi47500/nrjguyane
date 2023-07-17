@@ -1,0 +1,2 @@
+module AnimateursHelper
+end

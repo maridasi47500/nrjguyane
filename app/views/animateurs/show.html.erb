@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @animateur %>
+
+<div>
+  <%= link_to "Edit this animateur", edit_animateur_path(@animateur) %> |
+  <%= link_to "Back to animateurs", animateurs_path %>
+
+  <%= button_to "Destroy this animateur", @animateur, method: :delete %>
+</div>

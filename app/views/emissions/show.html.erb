@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @emission %>
+
+<div>
+  <%= link_to "Edit this emission", edit_emission_path(@emission) %> |
+  <%= link_to "Back to emissions", emissions_path %>
+
+  <%= button_to "Destroy this emission", @emission, method: :delete %>
+</div>

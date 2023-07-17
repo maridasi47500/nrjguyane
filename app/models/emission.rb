@@ -1,0 +1,2 @@
+class Emission < Post
+end

@@ -1,0 +1,2 @@
+class Animateur < Post
+end
