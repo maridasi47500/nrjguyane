@@ -169,10 +169,10 @@ label span {
 	display: block;
 	position: relative;
 }
-#trapeze audio {
+#trapeze .slidecontainer {
 	top: -60px;
 	position: absolute;
-	left: 400px;
+	left: 360px;
 }
 @charset "utf-8";
 /* CSS Document */
@@ -182,7 +182,7 @@ label span {
 	display:flex;
 	justify-content: space-around;
 	align-items: center;
-	background-color:#514F6B;
+	background-color:red;
 }
 
 .slider {
