@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: %i[ show edit update destroy ]
-
+  before_action :set_song, only: %i[ show edit update destroy returntime ]
+  protect_from_forgery except: [:update]
   # GET /songs or /songs.json
   def index
     @songs = Song.all
@@ -46,8 +46,37 @@ class SongsController < ApplicationController
       end
     end
   end
+  def returntime
+        respond_to do |format|
 
+    format.js {render js: :returntime}
+        end
+  end
+  def jouerunechanson
+    respond_to do |format|
+        format.json { render json: Playlist.myotherplaylist, status: :ok }
+    end
+  end
   # DELETE /songs/1 or /songs/1.json
+  def musique
+    respond_to do |format|
+        format.json { render json: {ok: session[:playmusique], myvol: session[:myvol]}, status: :ok }
+    end
+  end
+  def playmusique1
+     session[:myvol] = params[:myvol].to_s
+    respond_to do |format|
+        format.json { render json: session[:playmusique], status: :ok }
+    end
+  end
+  def playmusique
+    session[:playmusique] = params[:play].to_s
+    session[:myvol] = params[:myvol].to_s
+    respond_to do |format|
+        format.json { render json: session[:playmusique], status: :ok }
+    end
+  end
+  
   def destroy
     @song.destroy
 
@@ -65,6 +94,6 @@ class SongsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def song_params
-      params.require(:song).permit(:title, :artist)
+      params.require(:song).permit(:title, :artist, :filename,:duree)
     end
 end

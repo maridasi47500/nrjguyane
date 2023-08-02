@@ -10,7 +10,7 @@ class CreateSongs < ActiveRecord::Migration[7.0]
       t.string :title
       t.string :artist
       t.string :filename
-
+      t.float :duree
       t.timestamps
     end
   end

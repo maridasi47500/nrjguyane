@@ -1,2 +1,10 @@
 <div id="<%= dom_id playlist %>">
+    <p>heure début de la playlist : <%=playlist.heure_playlist%></p>
+    <ul>
+      <%playlist.playlistsongs.each do |a|%>
+        <li><%=a.song.artist%> - <%=a.song.title%> - <%=a.heure_chanson ? l(a.heure_chanson + 2.hours) : "aucune heure"%></li>
+        <%end%>
+        
+    </ul>
+    
 </div>

@@ -1,0 +1,52 @@
+<%= form_with(model: newsarticle) do |form| %>
+  <% if newsarticle.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(newsarticle.errors.count, "error") %> prohibited this newsarticle from being saved:</h2>
+
+      <ul>
+        <% newsarticle.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :type, style: "display: block" %>
+    <%= form.text_field :type %>
+  </div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :content, style: "display: block" %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :comphoto, style: "display: block" %>
+    <%= form.text_area :comphoto %>
+  </div>
+
+  <div>
+    <%= form.label :subtitle, style: "display: block" %>
+    <%= form.text_field :subtitle %>
+  </div>
+
+  <div>
+   
+    <%= form.hidden_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

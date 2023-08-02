@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @videoplaylist %>
+
+<div>
+  <%= link_to "Edit this videoplaylist", edit_videoplaylist_path(@videoplaylist) %> |
+  <%= link_to "Back to videoplaylists", videoplaylists_path %>
+
+  <%= button_to "Destroy this videoplaylist", @videoplaylist, method: :delete %>
+</div>

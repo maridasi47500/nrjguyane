@@ -1,7 +1,96 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @animateur %>
+<div class="wm-main-wrapper container" id="page-content-wrapper">
 
+
+    
+
+      
+<!--// Mini Header \\-->
+<div class="wm-mini-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                    <ul class="mybreadcrumb">
+        <li><a href="/">Accueil</a></li>
+                    <li><a href="/list/animateur/p">animateur</a></li>
+                    <li><a href="#"><%=@animateur.title%></a></li>
+            </ul>
+                <div class="wm-page-heading">
+                    <h1><%=@animateur.title%></h1>
+                    <p></p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--// Mini Header \\-->
+
+
+    <!--// Main Content \\-->
+    <div class="wm-main-content">
+
+        <!--// Main Section \\-->
+        <div class="wm-main-section wm-artistlist-full">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="wm-artist wm-artist-medium">
+                            <ul class="row">
+                                <li class="col-md-12">
+                                                                            <figure class="figure-animateurs">
+                                            <img src="/uploads/<%=@animateur.image%>" alt="<%=@animateur.title%>" class="img-responsive">
+                                        </figure>
+                                                                        <div class="wm-artist-text">
+                                        <div class="wm-artist-title">
+                                            <div class="wm-title">
+                                                                                                                                                
+                                                <span><%=@animateur.subtitle%></span>
+                                            </div>
+                                            <div class="social">
+        <a target="_blank" href="https://soundcloud.com/royann_music/royann-dancehall-zone?ref=facebook&amp;p=i&amp;c=1 "><i class="fa fa-2x fa-soundcloud"></i></a>
+        <a target="_blank" href="https://www.facebook.com/royann.zaga "><i class="fa fa-2x fa-facebook"></i></a>
+        <a target="_blank" href="https://www.facebook.com/royann.zaga "><i class="fa fa-2x fa-instagram"></i></a>
+    </div>                                        </div>
+                                                                                <div>
+                                          
+                                                                                    <%=simple_format(@animateur.description)%>
+                                                                            </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// Main Section \\-->
+
+                    <!--// Main Section \\-->
+            <div class="wm-main-section wm-recent-releases-full">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="wm-simple-facny-title"><h2 class="primary-color">Ses emissions</h2></div>
+                            <div class="wm-album wm-recent-releases-album">
+                                <ul class="row d-flex-justify-center">
+<%=render collection: @animateur.emissions, as: :emission, partial: "animateurs/emissions"%>
+                                    
+                                </ul>
+                            </div>
+                            <div class="wm-seeall-btn mrgB"><a href="/list/emission/p" class="wm-bgcolor">Toutes les emissions</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// Main Section \\-->
+        
+    </div>
+    <!--// Main Content \\-->
+
+
+</div>
 <div>
   <%= link_to "Edit this animateur", edit_animateur_path(@animateur) %> |
   <%= link_to "Back to animateurs", animateurs_path %>

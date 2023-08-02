@@ -8,3 +8,26 @@
 
   <%= button_to "Destroy this song", @song, method: :delete %>
 </div>
+<%=content_for :asomejs do%>
+<script>
+window.onload=function(){
+function a(){
+/*$.ajax({url: '<%=returntime_song_path(@song.id)%>', success:function(data){}});*/
+	var audio1 = new Audio('/uploads/'+("<%=@song.filename.html_safe%>"));
+	audio1.addEventListener("loadedmetadata", setSliderMax);
+        
+	function setSliderMax() {
+                $.ajax({url: "/songs/<%=@song.id%>.json", data: {song: {duree: audio1.duration}}, type: "patch",
+                success:function(data){
+                  $(".duree").html(String(data.duree)+"s")
+                }
+                });
+               
+                
+	}
+return false;
+};
+a();
+};
+</script>
+<%end%>

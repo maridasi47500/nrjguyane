@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @musique %>
+
+<div>
+  <%= link_to "Edit this musique", edit_musique_path(@musique) %> |
+  <%= link_to "Back to musiques", musiques_path %>
+
+  <%= button_to "Destroy this musique", @musique, method: :delete %>
+</div>

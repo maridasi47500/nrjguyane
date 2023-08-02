@@ -10,7 +10,38 @@
       </ul>
     </div>
   <% end %>
+<div>
+<%=form.select :song_ids, Song.all.collect{|x|[x.artist + " - " + x.title, x.id]},{},{multiple:true,class:"mysongsselect"}%>
+</div>
+<!-- comment -->
+<h2>éditer les titres</h2>
+<table>
+     <th style="background-color:<%=cycle("yellow","purple")%>;">
+<td>écouter</tr>
+    <td>
+        artist
+    </td>
+    <td>
+               titre
 
+    </td>
+</th>
+  <%=form.fields_for :songs do |f|%>
+    
+    <tr style="background-color:<%=cycle("yellow","purple")%>;">
+<td>écouter : <audio src="/uploads/<%=f.object.filename.html_safe%>" controls></audio></tr>
+    <td>
+        <%=f.label :artist%>
+        <%=f.text_field :artist%>
+    </td>
+    <td>
+                <%=f.label :title%>
+        <%=f.text_field :title%>
+
+    </td>
+</tr>
+    <%end%>
+</table>
   <div>
     <%= form.submit %>
   </div>

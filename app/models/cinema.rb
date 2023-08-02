@@ -1,0 +1,3 @@
+class Cinema < Newsarticle
+  
+end

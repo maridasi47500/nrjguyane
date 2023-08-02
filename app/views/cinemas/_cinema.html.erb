@@ -1,0 +1,25 @@
+      <li class="col-md-12 cinemaitem" id="<%=dom_id cinema%>">
+                                        <div class="wm-album-medium-wrap">
+                                            <figure class="figure-listview">
+                                                <a onmouseleave="mypic<%=cinema.id%>.classList.remove('hoverme')" onmouseenter="mypic<%=cinema.id%>.classList.add('hoverme')"  href="/post/actualite/<%=cinema.title.parameterize%>-<%=cinema.id%>" class="ungraythumb">
+                                                    <img width="290px" height="153px" src="/uploads/<%=cinema.image%>" alt="UNE GUYANAISE AU SUPER BOWL">
+                                                    <span class="wm-hoverlink wm-color" id="mypic<%=cinema.id%>"><img src="/uploads/flaticonlink.png" /></span>
+                                                </a>
+                                            </figure>
+                                            <div class="wm-album-medium-text">
+                                                <h2 class="mytitle">
+                                                    <a class="primary-color" href="/post/actualite/<%=cinema.title.parameterize%>-<%=cinema.id%>">UNE GUYANAISE AU SUPER BOWL</a>
+                                                </h2>
+                                                <div class="social">
+    <a data-sharer="facebook" data-hashtag="" data-url="/post/actualite/<%=cinema.title.parameterize%>-<%=cinema.id%>"><i class="fa fa-2x fa-facebook-square"></i></a>
+    <a data-sharer="twitter" data-hashtag="" data-url="/post/actualite/<%=cinema.title.parameterize%>-<%=cinema.id%>"><i class="fa fa-2x fa-twitter-square"></i></a>
+    <a data-sharer="linkedin" data-hashtag="" data-url="/post/actualite/<%=cinema.title.parameterize%>-<%=cinema.id%>"><i class="fa fa-2x fa-linkedin-square"></i></a>
+    <a data-sharer="pinterest" data-hashtag="" data-url="/post/actualite/<%=cinema.title.parameterize%>-<%=cinema.id%>"><i class="fa fa-2x fa-pinterest-square"></i></a>
+</div>                                                <ul class="wm-album-options">
+                                                                                                                                                                    <li><a href="#">Évènement</a></li>
+                                                                                                                                                            </ul>
+                                                <p class="mytext"><%=cinema.comphoto%></p>
+                                            <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </li>

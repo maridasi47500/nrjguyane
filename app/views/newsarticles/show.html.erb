@@ -1,0 +1,170 @@
+<p style="color: green"><%= notice %></p>
+<%=content_for :title do%>
+<%=@newsarticle.title%>
+<%end%>
+<div class="wm-main-wrapper container" id="page-content-wrapper">
+
+
+    
+
+      
+
+
+<!--// Main Content \\-->
+<div class="wm-main-content">
+    <!--// Main Section \\-->
+    <div class="wm-main-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 head-inside">
+                    <!-- 235 -->
+                                            <div class="wm-blog wm-blog-single">
+                                <ul class="mybreadcrumb">
+        <li><a href="/">Accueil</a></li>
+                    <li><a href="/list/actualite/p">actualite</a></li>
+                    <li><a href="#"><%=@newsarticle.title%></a></li>
+            </ul>
+                            <div class="wm-mini-header">
+                                <div class="wm-page-heading text-left">
+                                    <h1><%=@newsarticle.title%></h1>
+                                    <p><%=@newsarticle.subtitle%></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            
+                                                        <div class="col-xs-12 col-md-5">
+                                                                    <figure class="figure-article_teaser_split">
+                                    <img src="/uploads/<%=@newsarticle.image%>" alt="" class="img-responsive">
+                                </figure>
+                                                                </div>
+                            
+                                                        <div class="col-xs-12 col-md-7 item-teaser">
+                                <h2><%=@newsarticle.comphoto%></h2>
+                            </div>
+                            
+                                                        <div class="wm-blog-text article-light  article-bg-grey">
+                                <div class="row full-w gutter-v mx-0">
+                                                                        <ul class="blog-post-options">
+                                                                                    <li>Par: <%=@newsarticle.user.try(:username)%></li>
+                                                                                <li>Date:
+                                            <time datetime="<%=@newsarticle.created_at%>"><%=l(@newsarticle.created_at.to_date)%></time>
+                                        </li>
+                                    </ul>
+                                </div>
+                                                                                                    <div class="row contentRaw mx-0">
+                                        
+              <%=simple_format(@newsarticle.content)%>                                                                                          
+                                                                                                        
+                                                                                                        
+                                    </div>
+                                                                
+                            </div>
+
+                                                            <div class="col-md-12 mrgT">
+                                    <div class="wm-gallery wm-modern-gallery">
+    <ul class="row">
+                <li class="col-md-4">
+            <figure class="figure-gallery">
+                <a href="https://www.nrjguyane.fm/media/cache/resolve/full_img/uploads/media/nrjguyanefm/capt.jpg" class="no-listen-onclick">
+                    <span class="fa fa-photo"></span>
+                    <img src="https://www.nrjguyane.fm/media/cache/resolve/gallery_fancy/uploads/media/nrjguyanefm/capt.jpg" alt="capt.jpg">
+                </a>
+                <figcaption>
+                    <a data-fancybox="gallery" href="https://www.nrjguyane.fm/media/cache/resolve/full_img/uploads/media/nrjguyanefm/capt.jpg" class="no-listen-onclick"><i class="flaticon-link"></i></a>
+                </figcaption>
+            </figure>
+        </li>
+                <li class="col-md-4">
+            <figure class="figure-gallery">
+                <a href="https://www.nrjguyane.fm/media/cache/resolve/full_img/uploads/media/nrjguyanefm/sysleyloubet.jpeg" class="no-listen-onclick">
+                    <span class="fa fa-photo"></span>
+                    <img src="https://www.nrjguyane.fm/media/cache/resolve/gallery_fancy/uploads/media/nrjguyanefm/sysleyloubet.jpeg" alt="sysleyloubet.jpeg">
+                </a>
+                <figcaption>
+                    <a data-fancybox="gallery" href="https://www.nrjguyane.fm/media/cache/resolve/full_img/uploads/media/nrjguyanefm/sysleyloubet.jpeg" class="no-listen-onclick"><i class="flaticon-link"></i></a>
+                </figcaption>
+            </figure>
+        </li>
+            </ul>
+</div>                                </div>
+                            
+                                                                                        
+                                                            <div class="wm-blog-tags">
+                                    <div class="wm-blog-heading">
+                                        <h2>Tags</h2>
+                                    </div>
+                                    <ul class="wm-tags">
+                                                                                    <li>
+                                                <a href="#">Évènement</a>
+                                            </li>
+                                                                            </ul>
+                                    <div class="social">
+    <a data-sharer="facebook" data-hashtag="" data-url="https://www.nrjguyane.fm/post/actualite/une-guyanaise-au-super-bowl-1645022580?slim=1"><i class="fa fa-2x fa-facebook-square"></i></a>
+    <a data-sharer="twitter" data-hashtag="" data-url="https://www.nrjguyane.fm/post/actualite/une-guyanaise-au-super-bowl-1645022580?slim=1"><i class="fa fa-2x fa-twitter-square"></i></a>
+    <a data-sharer="linkedin" data-hashtag="" data-url="https://www.nrjguyane.fm/post/actualite/une-guyanaise-au-super-bowl-1645022580?slim=1"><i class="fa fa-2x fa-linkedin-square"></i></a>
+    <a data-sharer="pinterest" data-hashtag="" data-url="https://www.nrjguyane.fm/post/actualite/une-guyanaise-au-super-bowl-1645022580?slim=1"><i class="fa fa-2x fa-pinterest-square"></i></a>
+</div>                                </div>
+                                                                                </div>
+                                    </div>
+                <aside class="col-md-3">
+                        <!-- on air -->
+        
+<%=render partial: "application/podcasts_aside", as: :animateur, collection: Animateur.passebientot%>    
+    
+    
+                    
+    
+                        <!-- podcasts -->
+<div class="widget wm_albumplayer_widget wm-albumplayer" style="display: none;">
+    <div class="wm-widget-heading">
+            <h2 style="color: #FFFFFF;">podcasts</h2>
+        </div>
+    <div id="jp_container_pocasts_aside" class="jp-audio" role="application" aria-label="media player">
+        <div class="jp-type-playlist">
+            <span class="jp-play"><i class="fa fa-pause"></i> <i class="fa fa-play"></i></span>
+            <div id="jquery_jplayer_podcasts_aside" class="jp-jplayer"></div>
+            <div class="jp-gui jp-interface">
+                <div id="current-track_podcasts_aside" class="song-title">--</div>
+                <div class="wm-player-wrap">
+                    <span class="jp-previous"><i class="flaticon-arrows-1"></i></span>
+                    <div class="jp-progress">
+                        <div class="jp-seek-bar">
+                            <div class="jp-play-bar"></div>
+                        </div>
+                    </div>
+                    <span class="jp-next"><i class="flaticon-arrows-1"></i></span>
+                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                </div>
+            </div>
+            <div class="jp-playlist">
+                <ul>
+                    <li>&nbsp;</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /podcasts -->
+    <!-- sociaux -->
+                                                                <div class="wm-footer-social-media">
+        <ul class="wm-footer-icons aside-footer-icons even-items">
+                                                        </ul>
+    </div>
+    
+    <!-- newsletter -->
+                    </aside>
+            </div>
+        </div>
+    </div>
+    <!--// Main Section \\-->
+</div>
+
+
+</div>
+
+<div>
+  <%= link_to "Edit this newsarticle", edit_newsarticle_path(@newsarticle) %> |
+  <%= link_to "Back to newsarticles", newsarticles_path %>
+
+  <%= button_to "Destroy this newsarticle", @newsarticle, method: :delete %>
+</div>

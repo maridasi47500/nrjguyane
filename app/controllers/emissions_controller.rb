@@ -3,7 +3,12 @@ class EmissionsController < ApplicationController
 
   # GET /emissions or /emissions.json
   def index
+    @emissions = Emission.all.page params[:page]
+    @weekdays = Weekday.all
+  end
+  def grille
     @emissions = Emission.all
+    @weekdays = Weekday.all
   end
 
   # GET /emissions/1 or /emissions/1.json
@@ -65,6 +70,6 @@ class EmissionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def emission_params
-      params.require(:emission).permit(:name, :image, :description)
+      params.require(:emission).permit(:title,:subtitle, :image, :description,:duree_emission,:heure_emission, :animateur_ids=>[],:weekday_ids=>[])
     end
 end

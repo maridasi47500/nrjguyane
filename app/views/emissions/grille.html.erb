@@ -1,0 +1,93 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="wm-main-wrapper container" id="page-content-wrapper">
+
+
+    
+
+      
+<!--// Mini Header \\-->
+<div class="wm-mini-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                    <ul class="mybreadcrumb">
+        <li><a href="/">Accueil</a></li>
+                    <li><a href="#">Grille des programmes NRJ</a></li>
+            </ul>
+                <div class="wm-page-heading">
+                    <h1>Grille des programmes NRJ</h1>
+                    <p>du 01/05/2019 au 24/05/2024</p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--// Mini Header \\-->
+
+
+<div class="wm-main-content">
+    <div class="wm-main-section wm-eventcalendar-full">
+        <div class="container">
+            <%if @emissions.length > 0%>
+            <div class="col-md-9 col-xs-12">
+                <div id="planning-viewer"  class=" row planning">
+<div class="nav nav-tabs row day-names"><table><thead class="fc-head">
+            
+            <tr><td class="fc-head-container fc-widget-header"><div class="fc-row fc-widget-header"><table>
+<thead>
+    <tr>
+        <%@weekdays.each_with_index do |x,i|%>
+        <th class="fc-day-header fc-widget-header fc-sun <%=i == 0 ? "active" : ""%>">
+<a class="nav-link <%=i == 0 ? "active" : ""%>" id="<%=x.name.downcase%>-tab" data-bs-toggle="tab" data-bs-target="#<%=x.name.downcase%>" type="button" role="tab" aria-controls="<%=x.name.downcase%>" aria-selected="<%=i == 0 ? "true" : "false"%>" href="javascript:void(0);" >
+<span><%=x.name%></span></a></th> 
+    <%end%>
+    </tr></thead></table></div></td></tr></thead></table></div> 
+                    <div class="tab-content" id="myTabContent">
+                    <%@weekdays.each_with_index do |w,i|%>
+                        <div class="tab-pane fade <%=i == 0 ? " show active" : ""%>" id="<%=w.name.downcase%>" role="tabpanel" aria-labelledby="<%=w.name.downcase%>-tab">
+<div class="col-md-12 col-xs-12">
+    <%w.emissions.each do |e|%>
+    <div class="row emissions my-1">
+        <div class="col-md-2 emission-duree hidden-xs"><time class="timeline-time"><%=l(e.duree_emission, format: :mytime)%></time></div> <div class="col-md-10 emission-info col-xs-12"><h2 class="timeline-time visible-xs"><%=l(e.heure_emission, format: :mytime)%></h2> <div class="emission-img"><a href="/post/emission/la-playlist-nrj-1558701359"><img src="/uploads/<%=e.image%>" class="img-responsive"></a></div> <div class="emission-txt"><h2><%=e.title%></h2> <p><%=e.subtitle%></p> <div class="emission-link"><a href="<%=myemission_path(title: e.title.parameterize, id: e.id)%>"><i aria-hidden="true" class="fa fa-chevron-circle-right"></i></a></div></div></div>
+    </div> 
+        <%end%>
+        
+
+</div>
+                        </div>
+                    <%end%><!----> <!----> <!----> <!----> <!----> <!---->
+                    </div>
+                    </div>
+            </div>
+            <%else%>
+            <p>pas d'emissions pour le moment</p>
+<%end%>
+            <aside class="col-md-3 col-xs-12">
+                    <!-- on air -->
+        
+    <div id="aside_onair" class="widget widget_on_air"><div class="emission-onair" style="background-image: url(&quot;https://nrjguyane.fm/media/cache/on_air_nav/uploads/media/nrjguyanefm/1180x400-royann-2.jpg&quot;);"><a href="/post/emission/c-royann-de-15h-a-19h-sur-nrj-1663361364"><div class="emission-title"><h4>en direct</h4> <h5>C'ROYANN DE 15H A 19H SUR NRJ</h5></div></a></div></div>
+    
+    
+                    
+    
+    
+    <!-- sociaux -->
+                                                                <div class="wm-footer-social-media">
+        <ul class="wm-footer-icons aside-footer-icons even-items">
+                                                        </ul>
+    </div>
+    
+    <!-- newsletter -->
+                </aside>
+        </div>
+    </div>
+</div>
+
+
+
+
+</div>
+
+<%= link_to "New emission", new_emission_path %>

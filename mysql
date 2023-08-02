@@ -1,0 +1,60 @@
+
+SELECT created_at, week_number,
+             max(views) AS views,
+             (case when week_number = '28' then 'week number is 28' else 'wekk number is not 28' end) as mytest,
+             myclipid,
+ifnull(week_number2,0) as num_semaineder,
+ifnull(nbvuessemaineder,0),
+ifnull(count(weektop),0) as nbsem_top,
+ifnull(myweektop,0) as myweek__top,
+ifnull(weektop,0) as week__top,
+ifnull(max(myweekrownum),0) as nb__sem_top,
+views2 as lastweek,
+ifnull(classement_semaine_derniere,0),
+             classement_semaine,
+ifnull(ce_classement_semaine_derniere2,0),
+                    clip_id,
+                    max(ce_classement_semaine) as pire_position,
+                    max(classement_semaine) as ma_pire_position,
+                    min(ce_classement_semaine) as mailleure_position,
+                    min(classement_semaine) as ma_mailleure_position
+    FROM (SELECT v.id as myid,v.clip_id as myclipid, v.created_at as created_at, strftime('%W', v.created_at) AS week_number,
+             ROW_NUMBER() OVER(PARTITION BY  strftime('%W', v.created_at) ORDER BY sum(case when v.id is not null then 1 else 0 end) DESC) AS classement_semaine, 
+             ROW_NUMBER() OVER(PARTITION BY  strftime('%W', v.created_at) ORDER BY count(v.id) DESC) AS ce_classement_semaine, 
+             (case when strftime('%W',v.created_at) = '52' and strftime('%W','now') = '1' or strftime('%W','now') = cast((cast(strftime('%W',v.created_at) as integer) + 1) as string) then ('semderniere')  else 'pas de classement' end) as position_la_semaine_derniere,
+
+                       sum(case when v.id is not null then 1 else 0 end) AS views,
+                                    clip_id,
+                (case when strftime('%W', created_at) = '52' and strftime('%W','now') = '1' or strftime('%W','now') = cast(cast(strftime('%W', created_at) as integer) + 1 as string) and count(v.id) > 0 then count(v.id) else 'pas la semaine derniere' end) as classement_semaine_derniere
+          FROM views v
+group by week_number, clip_id
+
+) t1
+               left join (SELECT v1.id as myid2,v1.clip_id as myclipid2,v1.clip_id as clip_id2, v1.created_at as created_at2, strftime('%W', v1.created_at) AS week_number3,
+
+
+             ROW_NUMBER() OVER(PARTITION BY  strftime('%W', v1.created_at) ORDER BY count(v1.id) DESC) AS ce_classement_cette_semaine, 
+             strftime('%W',v1.created_at) as weektop,
+             count(strftime('%W',v1.created_at)) as myweektop,
+             ROW_NUMBER() OVER(PARTITION BY strftime('%W', v1.created_at) order by cast(strftime('%W',v1.created_at) as integer)) as myweekrownum,
+
+                       sum(case when v1.id is not null then 1 else 0 end) AS views3,
+                       clip_id as clip_id3
+                                    
+          FROM views v1
+                GROUP BY clip_id3,week_number3 ) t3 on t3.clip_id3 = t1.clip_id and t3.ce_classement_cette_semaine < 16
+               left join (SELECT v1.id as myid2,v1.clip_id as myclipid2,v1.clip_id as clip_id2, v1.created_at as created_at2, strftime('%W', v1.created_at) AS week_number2,
+
+
+             ROW_NUMBER() OVER(PARTITION BY  strftime('%W', v1.created_at) ORDER BY count(v1.id) DESC) AS ce_classement_semaine_derniere2, 
+             (select count(a.id) as mycount from views a where strftime('%W',a.created_at) = strftime('%W',v1.created_at) and a.clip_id = v1.clip_id) as nbvuessemaineder,
+
+                       sum(case when v1.id is not null then 1 else 0 end) AS views2,
+                       clip_id as clip_ip2
+                                    
+          FROM views v1
+                GROUP BY clip_id2,week_number2 ) t2 on t2.clip_id2 = t1.clip_id and
+             ((t2.week_number2 = '52' and strftime('%W','now') = '1') or strftime('%W','now') = cast(cast(t2.week_number2 as integer) + 1 as string))
+
+    GROUP BY clip_id
+    ORDER BY clip_id  ;

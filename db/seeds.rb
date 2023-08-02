@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+Weekday.create(name: "Lundi")
+Weekday.create(name: "Mardi")
+Weekday.create(name: "Mercredi")
+Weekday.create(name: "Jeudi")
+Weekday.create(name: "Vendredi")
+Weekday.create(name: "Samedi")
+Weekday.create(name: "Dimanche")

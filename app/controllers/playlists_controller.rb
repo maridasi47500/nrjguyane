@@ -25,6 +25,12 @@ class PlaylistsController < ApplicationController
 
     respond_to do |format|
       if @playlist.save
+    @duration=0.0
+    @playlist.playlistsongs.each do |h|
+      
+      h.update(heure_chanson: h.playlist.heure_playlist+@duration.second)
+      @duration+=h.song.duree
+    end
         format.html { redirect_to playlist_url(@playlist), notice: "Playlist was successfully created." }
         format.json { render :show, status: :created, location: @playlist }
       else
@@ -65,6 +71,6 @@ class PlaylistsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def playlist_params
-      params.fetch(:playlist, {})
+      params.require(:playlist).permit(:songs_attributes=>{},:song_ids=>[])
     end
 end

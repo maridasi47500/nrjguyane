@@ -3,7 +3,7 @@ class AnimateursController < ApplicationController
 
   # GET /animateurs or /animateurs.json
   def index
-    @animateurs = Animateur.all
+    @animateurs = Animateur.all.page params[:page]
   end
 
   # GET /animateurs/1 or /animateurs/1.json
@@ -65,6 +65,6 @@ class AnimateursController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def animateur_params
-      params.require(:animateur).permit(:title, :image, :description)
+      params.require(:animateur).permit(:title,:subtitle, :image, :description,:job)
     end
 end

@@ -12,10 +12,16 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
   </div>
+  <div>
+    <%= form.label :subtitle, style: "display: block" %>
+    <%= form.text_area :subtitle %>
+  </div>
+  <div>
 
+  </div>
   <div>
     <%= form.label :image, style: "display: block" %>
     <%= form.file_field :image %>
@@ -25,7 +31,35 @@
     <%= form.label :description, style: "display: block" %>
     <%= form.text_field :description %>
   </div>
+  <div>
+    <%= form.label :duree_emission, style: "display: block" %>
+    <%= form.time_field :duree_emission,
+      value: (emission.duree_emission ? l(emission.duree_emission, format: :mytime) : "%H:%M"),
+      min: 'hh:mm:ss',
+      max: 'hh:mm:ss' %>
+  </div>
+  <div>
+    <%= form.label :heure_emission, style: "display: block" %>
+    <%= form.time_field :heure_emission,
+      value: (emission.heure_emission ? l(emission.heure_emission, format: :mytime) : "%H:%M"),
+      min: 'hh:mm:ss',
+      max: 'hh:mm:ss' %>
+  </div>
 
+<div>
+    animateur/trice
+     <%= form.select(:animateur_ids, Animateur.all.collect {|p| [ p.title, p.id ] }, 
+                                           { :prompt => "Please select"}, 
+                                           { :multiple => true, :size => 5 }) %>
+
+    </div>
+<div>
+    jours de la semaine
+     <%= form.select(:weekday_ids, Weekday.all.collect {|p| [ p.name, p.id ] }, 
+                                           { :prompt => "Please select"}, 
+                                           { :multiple => true, :size => 7 }) %>
+
+    </div>
   <div>
     <%= form.submit %>
   </div>

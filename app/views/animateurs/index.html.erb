@@ -1,14 +1,107 @@
 <p style="color: green"><%= notice %></p>
+<%=content_for :title do%>
+Notre équipe
+<%end%>
+<div class="wm-main-wrapper container" id="page-content-wrapper">
 
-<h1>Animateurs</h1>
-
-<div id="animateurs">
-  <% @animateurs.each do |animateur| %>
-    <%= render animateur %>
-    <p>
-      <%= link_to "Show this animateur", animateur %>
-    </p>
-  <% end %>
+          <!--// Mini Header \\-->
+<div class="wm-mini-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                    <ul class="mybreadcrumb">
+        <li><a href="/">Accueil</a></li>
+                    <li><a href="#">Liste animateurs</a></li>
+            </ul>
+                <div class="wm-page-heading">
+                    <h1>Toutes les animateurs</h1>
+                    <p>Découvrez les animateurs</p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
 </div>
+<!--// Mini Header \\-->
+
+
+    <div class="wm-main-content">
+        <div class="wm-main-section wm-latestartist-albumfull">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <!--// Posts List \\-->
+                        <div class="wm-album wm-album-medium">
+                            <ul class="row">
+                                    <%=render @animateurs%> 
+                                <%if @animateurs.length == 0%>
+                                <p>pas de posts
+                                </p>
+                                <%end%>
+                                    
+                                                            </ul>
+                        </div>
+                    </div>
+                    <aside class="col-md-3">
+                        <!-- on air -->
+        
+<%=render partial: "application/podcasts_aside", as: :animateur, collection: Animateur.passebientot%>    
+    
+                    
+    
+                        <!-- podcasts -->
+<div class="widget wm_albumplayer_widget wm-albumplayer" style="display: none;">
+    <div class="wm-widget-heading">
+            <h2 style="color: #FFFFFF;">podcasts</h2>
+        </div>
+    <div id="jp_container_pocasts_aside" class="jp-audio" role="application" aria-label="media player">
+        <div class="jp-type-playlist">
+            <span class="jp-play"><i class="fa fa-pause"></i> <i class="fa fa-play"></i></span>
+            <div id="jquery_jplayer_podcasts_aside" class="jp-jplayer"></div>
+            <div class="jp-gui jp-interface">
+                <div id="current-track_podcasts_aside" class="song-title">--</div>
+                <div class="wm-player-wrap">
+                    <span class="jp-previous"><i class="flaticon-arrows-1"></i></span>
+                    <div class="jp-progress">
+                        <div class="jp-seek-bar">
+                            <div class="jp-play-bar"></div>
+                        </div>
+                    </div>
+                    <span class="jp-next"><i class="flaticon-arrows-1"></i></span>
+                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                </div>
+            </div>
+            <div class="jp-playlist">
+                <ul>
+                    <li>&nbsp;</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /podcasts -->
+    <!-- sociaux -->
+                                                                <div class="wm-footer-social-media">
+        <ul class="wm-footer-icons aside-footer-icons even-items">
+                                                        </ul>
+    </div>
+    
+    <!-- newsletter -->
+                        </aside>
+                </div>
+
+                <div class="row mrgB">
+    <div class="col-xs-12 pagination-container">
+        <%if @animateurs.length > 0%>
+          <%= paginate @animateurs %>
+        <%end%>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
 
 <%= link_to "New animateur", new_animateur_path %>

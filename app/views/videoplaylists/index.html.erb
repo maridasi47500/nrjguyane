@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Videoplaylists</h1>
+
+<div id="videoplaylists">
+  <% @videoplaylists.each do |videoplaylist| %>
+    <%= render videoplaylist %>
+    <p>
+      <%= link_to "Show this videoplaylist", videoplaylist %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New videoplaylist", new_videoplaylist_path %>

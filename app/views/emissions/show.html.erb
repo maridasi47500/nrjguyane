@@ -1,6 +1,117 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @emission %>
+<div class="wm-main-wrapper container" id="page-content-wrapper">
+
+      
+<!--// Mini Header \\-->
+<div class="wm-mini-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                    <ul class="mybreadcrumb">
+        <li><a href="/">Accueil</a></li>
+                    <li><a href="/list/emission/p">emission</a></li>
+                    <li><a href="#"><%=@emission.title%></a></li>
+            </ul>
+                <div class="wm-page-heading">
+                    <h1><%=@emission.title%></h1>
+                    <p></p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--// Mini Header \\-->
+
+
+
+<!--// Main Content \\-->
+<div class="wm-main-content">
+
+    <!--// Main Section \\-->
+    <div class="wm-main-section wm-albumsingle-full">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4">
+                    <div class="mrgB text-center">
+                        <figure>
+                                                        <div id="ad_300_600">
+                                <!-- NRJ GUYANE - 300x600 -->
+                            </div>
+                                                    </figure>
+                    </div>
+                </aside>
+
+                <div class="col-md-8">
+
+                    <!--// Emissions \\-->
+                    <div class="wm-album wm-album-medium">
+                        <ul class="row">
+                            <li class="col-md-12">
+                                <div class="wm-album-medium-wrap">
+                                                                                                            <figure class="figure-emissions h-auto">
+                                        <a href="#" class="ungraythumb">
+                                            <img src="/uploads/<%=@emission.image%>" alt="<%=@emission.title%>">
+                                        </a>
+                                    </figure>
+                                                                        <div class="wm-album-medium-text">
+                                                                                <div class="social">
+    <a data-sharer="facebook" data-hashtag="" data-url="https://www.nrjguyane.fm/post/emission/c-royann-de-15h-a-19h-sur-nrj-1663361364"><i class="fa fa-2x fa-facebook-square"></i></a>
+    <a data-sharer="twitter" data-hashtag="" data-url="https://www.nrjguyane.fm/post/emission/c-royann-de-15h-a-19h-sur-nrj-1663361364"><i class="fa fa-2x fa-twitter-square"></i></a>
+    <a data-sharer="linkedin" data-hashtag="" data-url="https://www.nrjguyane.fm/post/emission/c-royann-de-15h-a-19h-sur-nrj-1663361364"><i class="fa fa-2x fa-linkedin-square"></i></a>
+    <a data-sharer="pinterest" data-hashtag="" data-url="https://www.nrjguyane.fm/post/emission/c-royann-de-15h-a-19h-sur-nrj-1663361364"><i class="fa fa-2x fa-pinterest-square"></i></a>
+</div>                                        <ul class="wm-album-options">
+                                            <li><span class="wm-bgcolor wm-album-track-count">Durée&nbsp;04:00</span></li>
+                                                                                          <li><span>lundi</span> : 15:00 - 19:00</li>
+                                                                                          <li><span>mardi</span> : 15:00 - 19:00</li>
+                                                                                          <li><span>mercredi</span> : 15:00 - 19:00</li>
+                                                                                          <li><span>jeudi</span> : 15:00 - 19:00</li>
+                                                                                          <li><span>vendredi</span> : 15:00 - 19:00</li>
+                                                                                    </ul>
+                                        <%=@emission.subtitle%>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// Emissions \\-->
+
+                    <!--// Description, contenu \\-->
+                    <div class="wm-editore">
+                        <div class="wm-blog-heading">
+                            <h2 class="primary-color">description</h2>
+                        </div>
+                        <p><%=@emission.description%></p>
+                    </div>
+                    <!--// Description, contenu \\-->
+
+                    
+                                                            <div class="wm-albumteam-wrap">
+                                                                <%if @emission.animateurs.length > 0%>
+                        <div class="wm-blog-heading">
+                            <h2>animateurs</h2>
+                        </div>
+                        <div class="wm-artist-grid wm-albumteam-slider">
+
+                                                                                        <%=render collection: @emission.animateurs, as: :animateur, partial: "emissions/myradio"%>
+                            
+                        </div>
+                                                                
+                                                                <%end%>
+                    </div>
+                                                        </div>
+            </div>
+        </div>
+    </div>
+    <!--// Main Section \\-->
+
+</div>
+<!--// Main Content \\-->
+
+
+    </div>
 
 <div>
   <%= link_to "Edit this emission", edit_emission_path(@emission) %> |

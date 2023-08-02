@@ -1,0 +1,14 @@
+<li class="col-md-4">
+                                            <figure class="figure-animateurs_emissions"><a href="<%=myemission_path(title: emission.title.parameterize, id: emission.id)%>"><img src="/uploads/<%=emission.image%>" alt="<%=emission.title%>"></a>
+                                                <figcaption>
+                                                    <div class="wm-album-caption">
+                                                        <div class="clearfix"></div>
+                                                        <a href="<%=myemission_path(title: emission.title.parameterize, id: emission.id)%>" class="wm-album-linkbtn wm-color"><i class="flaticon-link"></i></a>
+                                                    </div>
+                                                </figcaption>
+                                            </figure>
+                                            <div class="wm-recent-releases-text">
+                                                <time datetime="04:00">ma duree</time>
+                                                <h2><a class="primary-color" href="<%=myemission_path(title: emission.title.parameterize, id: emission.id)%>"><%=emission.title%></a></h2>
+                                            </div>
+                                        </li>
