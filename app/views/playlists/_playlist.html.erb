@@ -1,9 +1,23 @@
 <div id="<%= dom_id playlist %>">
     <p>heure début de la playlist : <%=playlist.heure_playlist%></p>
     <ul>
+<li>chansons de cette playlist:<ul>
       <%playlist.playlistsongs.each do |a|%>
         <li><%=a.song.artist%> - <%=a.song.title%> - <%=a.heure_chanson ? l(a.heure_chanson + 2.hours) : "aucune heure"%></li>
         <%end%>
+</ul></li>
+<%if playlist.emissions.length > 0%>
+<li>emissions de cette playlist<ul>
+      <%playlist.emissions.each do |a|%>
+        <li><%=a.title%> - <%=a.subtitle%> - <%=link_to "parler dans cette émission", new_recording_path(playlist_id: playlist.id, emission_id: a.id) %></li>
+        <%end%>
+</ul></li>
+<li>enregistrement de cette playlist<ul>
+      <%playlist.playlistrecordings.each do |a|%>
+        <li><%=a.recording.artist%> - <%=a.recording.title%> - <%=a.heure_chanson ? l(a.heure_chanson + 2.hours) : "aucune heure"%></li>
+        <%end%>
+</ul></li>
+<%end%>
         
     </ul>
     

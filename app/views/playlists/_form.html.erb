@@ -11,6 +11,7 @@
     </div>
   <% end %>
 <div>
+<%=form.select :emission_ids, Emission.all.collect{|x|[x.id, x.id]},{},{multiple:true,class:"myemisionsselect",hidden:true}%>
 <%=form.select :song_ids, Song.all.collect{|x|[x.artist + " - " + x.title, x.id]},{},{multiple:true,class:"mysongsselect"}%>
 </div>
 <!-- comment -->

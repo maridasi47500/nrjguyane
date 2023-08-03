@@ -3,6 +3,7 @@ class CreateSongs < ActiveRecord::Migration[7.0]
     create_table :playlistsongs do |t|
       t.integer :song_id
       t.string :playlist_id
+      t.string :myorderid
       t.datetime :heure_chanson
 
     end

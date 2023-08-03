@@ -12,6 +12,9 @@ class CreateRecordings < ActiveRecord::Migration[7.0]
     create_table :playlistrecordings do |t|
       t.integer :recording_id
       t.integer :playlist_id
+      t.integer :emission_id
+      t.integer :myorderid
+      t.datetime :heure_chanson
     end
   end
 end

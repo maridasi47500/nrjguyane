@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post "audio/save"
   resources :recordings
   resources :videoplaylists
   resources :videos

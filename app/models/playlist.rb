@@ -1,4 +1,6 @@
 class Playlist < ApplicationRecord
+  has_and_belongs_to_many :emissions, :join_table => :playlistemissions
+  accepts_nested_attributes_for :emissions,allow_destroy: true
   has_many :playlistsongs, dependent: :destroy
   has_many :songs, :through => :playlistsongs
     has_many :playlistrecordings, dependent: :destroy

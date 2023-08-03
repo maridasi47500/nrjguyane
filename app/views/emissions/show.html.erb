@@ -116,6 +116,7 @@
 <div>
   <%= link_to "Edit this emission", edit_emission_path(@emission) %> |
   <%= link_to "Back to emissions", emissions_path %>
+  <%= link_to "parler dans l'émission (nouvelle playlist)", new_playlist_path(myemission_id:@emission.id) %>
 
   <%= button_to "Destroy this emission", @emission, method: :delete %>
 </div>

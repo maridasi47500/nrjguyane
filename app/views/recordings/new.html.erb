@@ -3,17 +3,47 @@
 <%= render "form", recording: @recording %>
 
 <br>
-<div id="controls">
-  	 <button id="recordButton">Record</button>
-  	 <button id="pauseButton" disabled>Pause</button>
-  	 <button id="stopButton" disabled>Stop</button>
+<p id="notice"><%= notice %></p>
+<div id="myplaylistid"><%=params[:playlist_id]%></div>
+<div id="myemissionid"><%=params[:emission_id]%></div>
+
+<p id="log"></p>
+<%=content_for :title do%>
+l'émission
+<%end%>
+
+<style>
+
+</style>
+
+      <header>
+
+	<div id="controls">
+		<img id="record" src="/img/mic128.png" onclick="toggleRecording(this);">
+<form id="myvideoform"> </form>
+<form id="myform"><textarea name="mycontent"></textarea> </form>
+		<a id="save" href="#"><img src="/img/save.svg"></a>
+	</div>
+
+
+      </header>
+   <div class="wrapper">
+
+
+<div id="viz">
+		<canvas id="analyser" width="1024" height="50"></canvas>
+		<canvas id="wavedisplay" width="1024" height="50"></canvas>
+	</div>
+
+
     </div>
-    <div id="formats">Format: start recording to see sample rate</div>
-  	<p><strong>Recordings:</strong></p>
-  	<ol id="recordingsList"></ol>
-    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
-  	<script src="js/recorder.js"></script>
-  	<script src="js/app.js"></script>
+
+
+<%=content_for :js do%>
+<script src="/js/audiodisplay.js"></script>
+        <script src="/js/recorderjs/recorder.js"></script>
+        <script src="/js/main.js"></script>
+<%end%>
 <div>
   <%= link_to "Back to recordings", recordings_path %>
 </div>

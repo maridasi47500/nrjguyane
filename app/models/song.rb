@@ -9,7 +9,7 @@ class Song < ApplicationRecord
         end
       t.join
     
-    @aa
+    JSON.parse(@aa)["format"]["duration"]
   rescue
     "my error"
   end

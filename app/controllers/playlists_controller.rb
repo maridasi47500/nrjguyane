@@ -13,6 +13,9 @@ class PlaylistsController < ApplicationController
   # GET /playlists/new
   def new
     @playlist = Playlist.new
+    if params[:myemission_id].to_i > 0
+      @playlist.emissions = Emission.where(id: params[:myemission_id])
+    end
   end
 
   # GET /playlists/1/edit
@@ -71,6 +74,6 @@ class PlaylistsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def playlist_params
-      params.require(:playlist).permit(:songs_attributes=>{},:song_ids=>[])
+      params.require(:playlist).permit(:songs_attributes=>{},:emissions_attributes=>{},:song_ids=>[],:emission_ids=>[])
     end
 end

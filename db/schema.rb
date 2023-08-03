@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_02_224521) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_03_153426) do
   create_table "animateurs", force: :cascade do |t|
     t.string "title"
     t.string "type"
@@ -67,9 +67,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_224521) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "playlistemissions", force: :cascade do |t|
+    t.integer "playlist_id"
+    t.integer "emission_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "playlistrecordings", force: :cascade do |t|
     t.integer "recording_id"
     t.integer "playlist_id"
+    t.integer "emission_id"
+    t.datetime "heure_chanson"
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -82,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_224521) do
   create_table "playlistsongs", force: :cascade do |t|
     t.integer "song_id"
     t.string "playlist_id"
+    t.string "myorderid"
     t.datetime "heure_chanson"
   end
 
@@ -118,7 +128,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_224521) do
     t.float "duree"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image"
   end
 
   create_table "users", force: :cascade do |t|
