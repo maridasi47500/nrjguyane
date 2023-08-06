@@ -1,4 +1,11 @@
 class Recording < ApplicationRecord
+  after_validation :azertyuioiuy
+  def azertyuioiuy
+    if !self.duree
+      self.duree=self.duration
+    end
+  end
+
   def duration
     t = Thread.new do
     @aa = `ffprobe -print_format json -show_streams -show_format -v error #{Rails.root.to_s+"/public/uploads/"+filename}`

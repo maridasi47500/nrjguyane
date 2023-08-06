@@ -1,5 +1,12 @@
 class Song < ApplicationRecord
   has_and_belongs_to_many :playlists, :join_table => :playlistsongs
+  
+  after_validation :azertyuioiuy
+  def azertyuioiuy
+    if !self.duree
+    self.duree=self.duration
+    end
+  end
   def image
     read_attribute(:image) || "no_album_art.png"
   end

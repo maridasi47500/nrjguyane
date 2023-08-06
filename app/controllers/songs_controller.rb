@@ -53,8 +53,9 @@ class SongsController < ApplicationController
         end
   end
   def jouerunechanson
+    @a=Playlist.myotherplaylist||{}
     respond_to do |format|
-        format.json { render json: Playlist.myotherplaylist, status: :ok }
+        format.json { render json: @a, status: :ok }
     end
   end
   # DELETE /songs/1 or /songs/1.json
