@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_153426) do
     t.integer "recording_id"
     t.integer "playlist_id"
     t.integer "emission_id"
+    t.integer "myorderid"
     t.datetime "heure_chanson"
   end
 
@@ -128,6 +129,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_153426) do
     t.float "duree"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image"
   end
 
   create_table "users", force: :cascade do |t|

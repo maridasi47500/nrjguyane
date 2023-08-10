@@ -1,5 +1,6 @@
 class Playlist < ApplicationRecord
   after_update :poiuytre
+  after_create :poiuytre
   def poiuytre
     x=self.playlistsongs.to_a+self.playlistrecordings.to_a
     y=x.select{|h|h.heure_chanson}.sort_by{|h|h.heure_chanson}
@@ -71,55 +72,55 @@ artist_suiv,title_suiv, suiv_filename,
 duree,filename, songid, playlistid,timenow,heure_derniere_chanson
 
     from (
+    select
+    playlists.*, ps.heure_chanson, songs.duree,strftime('%H:%M:%S','now')  as now,songs.created_at as songscreatedat,cast(strftime('%s','now') as float) - cast(strftime('%s',ps.heure_chanson) as float) as moment_dans_chanson,cast(strftime('%s',ps.heure_chanson) as float) as debut_chanson,cast(strftime('%s',ps.heure_chanson) as float) + songs.duree as madureetotale, playlists.id as playlistid,cast(strftime('%s','now') as float) as timenow, songs.id as songid, row_number() OVER(partition by playlists.id,playlists.created_at order by ps.id) as row_num, max(heure_chanson) as heure_derniere_chanson, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson, songs.title, songs.artist, songs.filename, null as recording_id, null as emission_id, ps.song_id, ps.id as psid, 'song' as mytype
+    from playlists
+    left join playlistsongs ps on ps.playlist_id = playlists.id and cast(strftime('%s',ps.heure_chanson) as float) < cast(strftime('%s','now') as float) left join songs on        songs.id = ps.song_id and cast(strftime('%s',ps.heure_chanson) as float)+songs.duree > cast(strftime('%s','now') as float)
+    union
+    select playlistsA.*, psA.heure_chanson, songsA.duree,strftime('%H:%M:%S','now')  as now,songsA.created_at as songscreatedat,cast(strftime('%s','now') as float) - cast(strftime('%s',psA.heure_chanson) as float) as moment_dans_chanson,cast(strftime('%s',psA.heure_chanson) as float) as debut_chanson,cast(strftime('%s',psA.heure_chanson) as float) + songsA.duree as madureetotale, playlistsA.id as playlistid,cast(strftime('%s','now') as float) as timenow, songsA.id as songid, row_number() OVER(partition by playlistsA.id,playlistsA.created_at order by psA.id) as row_num, max(heure_chanson) as heure_derniere_chanson, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson, songsA.title, songsA.artist, songsA.filename, psA.recording_id, psA.emission_id, null as song_id, psA.id as psid, 'recording' as mytype
+    from playlists playlistsA
+     left join playlistrecordings psA on psA.playlist_id = playlistsA.id and cast(strftime('%s',psA.heure_chanson) as float) < cast(strftime('%s','now') as float) left join recordings songsA on        songsA.id = psA.recording_id
+       and cast(strftime('%s',psA.heure_chanson) as float)+songsA.duree > cast(strftime('%s','now') as float)
 
-select 
-playlists.*, ps.heure_chanson, songs.duree,strftime('%H:%M:%S','now')  as now,songs.created_at as songscreatedat,cast(strftime('%s','now') as float) - cast(strftime('%s',ps.heure_chanson) as float) as moment_dans_chanson,cast(strftime('%s',ps.heure_chanson) as float) as debut_chanson,cast(strftime('%s',ps.heure_chanson) as float) + songs.duree as madureetotale, playlists.id as playlistid,cast(strftime('%s','now') as float) as timenow, songs.id as songid, row_number() OVER(partition by playlists.id order by ps.id) as row_num, max(heure_chanson) as heure_derniere_chanson, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson, songs.title, songs.artist, songs.filename
- from playlists 
-left join playlistsongs ps on ps.playlist_id = playlists.id left join songs on        songs.id = ps.song_id
-union all
-select playlists.*, ps.heure_chanson, songs.duree,strftime('%H:%M:%S','now')  as now,songs.created_at as songscreatedat,cast(strftime('%s','now') as float) - cast(strftime('%s',ps.heure_chanson) as float) as moment_dans_chanson,cast(strftime('%s',ps.heure_chanson) as float) as debut_chanson,cast(strftime('%s',ps.heure_chanson) as float) + songs.duree as madureetotale, playlists.id as playlistid,cast(strftime('%s','now') as float) as timenow, songs.id as songid, row_number() OVER(partition by playlists.id order by ps.id) as row_num, max(heure_chanson) as heure_derniere_chanson, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson, songs.title, songs.artist, songs.filename
- from playlists 
-left join playlistrecordings ps on ps.playlist_id = playlists.id left join recordings songs on        songs.id = ps.recording_id
+        group by songid, playlistid, mytype
 
-group by songid, playlistid, songscreatedat
-
-order by heure_chanson asc
+         order by heure_chanson asc
 
 ) t1 
 left outer join (
 
 select 
- heure_chanson as heure_chanson1,filename as prev_filename, pl1.id as playlistid1,s1.created_at as s1created, s1.title as title_prec,s1.artist as artist_prec, s1.id as songid1, row_number() OVER(partition by pl1.id order by ps1.id) as row_num1, max(heure_chanson) as heure_derniere_chanson1, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson1, s1.title as title1, s1.artist artist1, s1.filename filename1
- from playlists pl1 left join playlistsongs ps1 on ps1.playlist_id = pl1.id left join songs s1
-on s1.id = ps1.song_id
-union all
+ heure_chanson as heure_chanson1,filename as prev_filename, pl1.id as playlistid1,s1.created_at as s1created, s1.title as title_prec,s1.artist as artist_prec, s1.id as songid1, row_number() OVER(partition by pl1.id,pl1.created_at order by ps1.id) as row_num1, max(heure_chanson) as heure_derniere_chanson1, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson1, s1.title as title1, s1.artist artist1, s1.filename filename1, null as emission_id, null as recording_id, song_id
+ from playlists pl1 
+    left join playlistsongs ps1 on ps1.playlist_id = pl1.id and cast(strftime('%s',ps1.heure_chanson) as float) < cast(strftime('%s','now') as float) left join songs s1 on        s1.id = ps1.song_id and cast(strftime('%s',ps1.heure_chanson) as float)+s1.duree > cast(strftime('%s','now') as float)
+union
 select 
- heure_chanson as heure_chanson1,filename as prev_filename, pl1.id as playlistid1,s1.created_at as s1created, s1.title as title_prec,s1.artist as artist_prec, s1.id as songid1, row_number() OVER(partition by pl1.id order by ps1.id) as row_num1, max(heure_chanson) as heure_derniere_chanson1, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson1, s1.title title1, s1.artist artist1, s1.filename filename1
- from playlists pl1 left join playlistrecordings ps1 on ps1.playlist_id = pl1.id left join recordings s1
-on s1.id = ps1.recording_id
+ heure_chanson as heure_chanson1,filename as prev_filename, pl1A.id as playlistid1,s1A.created_at as s1created, s1A.title as title_prec,s1A.artist as artist_prec, s1A.id as songid1, row_number() OVER(partition by pl1A.id,pl1A.created_at order by ps1A.id) as row_num1, max(heure_chanson) as heure_derniere_chanson1, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson1, s1A.title title1, s1A.artist artist1, s1A.filename filename1, ps1A.emission_id, ps1A.recording_id, null as song_id
+ from playlists pl1A 
+    left join playlistrecordings ps1A on ps1A.playlist_id = pl1A.id and cast(strftime('%s',ps1A.heure_chanson) as float) < cast(strftime('%s','now') as float) left join recordings s1A on        s1A.id = ps1A.recording_id and cast(strftime('%s',ps1A.heure_chanson) as float)+s1A.duree <= cast(strftime('%s','now') as float)
 
 
-group by songid1, playlistid1,s1created
+group by songid1
 
 order by heure_chanson asc
-)t2_prec on t2_prec.row_num1 = (t1.row_num - 1) and t2_prec.playlistid1 = t1.playlistid
+)t2_prec on t2_prec.heure_chanson1 < t1.heure_chanson
 left outer join (
 
 select 
- heure_chanson as heure_chanson3,filename as suiv_filename, pl3.id as playlistid3,s3.created_at as s3created, s3.title as title_suiv,s3.artist as artist_suiv, s3.id as songid3, row_number() OVER(partition by pl3.id order by ps3.id) as row_num3, max(heure_chanson) as heure_derniere_chanson3, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson3, s3.title as title3, s3.artist artist3, s3.filename filename3
- from playlists pl3 left join playlistsongs ps3 on ps3.playlist_id = pl3.id left join songs s3
-on s3.id = ps3.song_id
-union all
+ heure_chanson as heure_chanson3,filename as suiv_filename, pl3.id as playlistid3,s3.created_at as s3created, s3.title as title_suiv,s3.artist as artist_suiv, s3.id as songid3, row_number() OVER(partition by pl3.id,pl3.created_at order by ps3.id) as row_num3, max(heure_chanson) as heure_derniere_chanson3, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson3, s3.title as title3, s3.artist artist3, s3.filename filename3, null as recording_id, null as emission_id, ps3.song_id
+ from playlists pl3 
+    left join playlistsongs ps3 on ps3.playlist_id = pl3.id and cast(strftime('%s',ps3.heure_chanson) as float) > cast(strftime('%s','now') as float) left join songs s3 on        s3.id = ps3.song_id and cast(strftime('%s',ps3.heure_chanson) as float)+s3.duree > cast(strftime('%s','now') as float)
+union
 select 
- heure_chanson as heure_chanson3,filename as suiv_filename, pl3.id as playlistid3,s3.created_at as s3created, s3.title as title_suiv,s3.artist as artist_suiv, s3.id as songid3, row_number() OVER(partition by pl3.id order by ps3.id) as row_num3, max(heure_chanson) as heure_derniere_chanson3, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson3, s3.title title3, s3.artist artist3, s3.filename filename3
- from playlists pl3 left join playlistrecordings ps3 on ps3.playlist_id = pl3.id left join recordings s3
-on s3.id = ps3.recording_id
+ heure_chanson as heure_chanson3,filename as suiv_filename, pl3A.id as playlistid3,s3A.created_at as s3created, s3A.title as title_suiv,s3A.artist as artist_suiv, s3A.id as songid3, row_number() OVER(partition by pl3A.id,pl3A.created_at order by ps3A.id) as row_num3, max(heure_chanson) as heure_derniere_chanson3, (case when max(heure_chanson) = heure_chanson then duree else 0 end) as duree_derniere_chanson3, s3A.title title3, s3A.artist artist3, s3A.filename filename3, null as song_id, ps3A.emission_id, ps3A.recording_id
+ from playlists pl3A 
+    left join playlistrecordings ps3A on ps3A.playlist_id = pl3A.id and cast(strftime('%s',ps3A.heure_chanson) as float) < cast(strftime('%s','now') as float) left join recordings s3A on        s3A.id = ps3A.recording_id and cast(strftime('%s',ps3A.heure_chanson) as float)+s3A.duree > cast(strftime('%s','now') as float)
 
-group by songid3, playlistid3,s3created
+group by songid3
 
 order by heure_chanson asc
 ) 
-t3_suiv on t3_suiv.row_num3 = (t1.row_num +1) and t3_suiv.playlistid3 = t1.playlistid
+t3_suiv on t3_suiv.heure_chanson3 > t1.heure_chanson
 
 group by songid, playlistid
 having (cast(strftime('%s',heure_chanson) as float)+duree > ?)
